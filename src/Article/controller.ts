@@ -5,6 +5,16 @@ import { Like } from "typeorm";
 
 const articlesRepository = AppDataSource.getRepository(Article);
 
+export const getArticleById = async function (req: Request, res: Response) {
+  try {
+    const articles = await articlesRepository.find({
+      where: { id: Number(req.params.id) },
+    });
+    return res.status(200).json(articles);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
 export const getArticles = async function (req: Request, res: Response) {
   try {
     const articles = await articlesRepository.find();
